@@ -9,21 +9,22 @@ services:
   db:
     image: postgres:13
     env_file: .env
-    volumes:
-      - pg_data:/var/lib/postgresql/data
-  backend:
-    build: ./backend/
-    env_file: .env
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USER}" ]
       timeout: 45s
       interval: 10s
       retries: 10
     volumes:
+      - pg_data:/var/lib/postgresql/data
+  backend:
+    build: ./backend/
+    env_file: .env
+    volumes:
       - static:/backend_static
       - media:/app/media
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   frontend:
     env_file: .env
     build: ./frontend/

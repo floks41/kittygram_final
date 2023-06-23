@@ -23,7 +23,8 @@ services:
       - static:/backend_static
       - media:/app/media
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   frontend:
     env_file: .env
     image: chtiger/kittygram_frontend
