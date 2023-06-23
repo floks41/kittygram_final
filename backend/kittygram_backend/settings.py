@@ -6,9 +6,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-settings-secret-key') 
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['kittygram4.hopto.org', 'backend', '127.0.0.1']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'backend 127.0.0.1 localhost').split(' ')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
